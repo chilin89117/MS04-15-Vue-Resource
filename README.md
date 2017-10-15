@@ -1,18 +1,33 @@
-# vue-cli
+# MS04-08 Custom Directives (No Laravel)
+**Note: edit `main.js` to switch between `App.vue` and `Exercise10.vue`**
+## `App.vue`
+### Create a globally-registered custom directive `v-highlight`
+* with argument `bg` to change background color
+* with modifier `delay` for delayed effect
 
-> A Vue.js project
+### Create a locally-registered custom directive `v-local-highlight`:
 
-## Build Setup
+* with argument `bg` to change background color
 
-``` bash
-# install dependencies
-npm install
+* with modifiers
+	* `delayed` for delayed effect
+	* `blink` for alternating colors
 
-# serve with hot reload at localhost:8080
-npm run dev
+* with value object
+	* `mainColor`
+	* `altColor` for alternate color
+	* `delay`
+	* `blinkRate`
 
-# build for production with minification
-npm run build
-```
+#### End of Section 12, lecture 168.
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## `Exercise10.vue`
+* Custom directive `v-custom` with
+	* Javascript events as arguments:
+		* click
+		* mouseenter
+		* mouseleave
+	* custom methods as values:
+		* clicked()
+		* mouseEnter()
+		* mouseLeave()
