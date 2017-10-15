@@ -4,15 +4,17 @@
   @include('inc.head')
 
   <body>
-
-    @include('inc.nav')
-
     <div id="app">
+      
+      @include('inc.nav')
 
       @yield('content')
 
     </div>
 
+    <script src="{{asset('js/manifest.js')}}"></script>
+    <script src="{{asset('js/vendor.js')}}"></script>
     <script src="{{asset('js/app.js')}}"></script>
+
   </body>
 </html>
