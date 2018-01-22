@@ -1,4 +1,8 @@
-# MS04-11 Http (With Laravel)
+# MS04-15-Vue-Resource (With Laravel)
+### Note: This application uses the ms04-01 database
+
+![Home Page](../assets/a.png?raw=true)
+
 * Use `bcryptjs` to encrypt password on the client side
 * Use 3 methods to add and display users:
 	* `jQuery/AJAX`
