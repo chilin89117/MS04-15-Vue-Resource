@@ -2,16 +2,12 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-//---------------------------------------------------------------------
-
 // From http://api.jquery.com/jquery.ajax/
 $.ajaxSetup({
   headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
   },
 });
-
-//---------------------------------------------------------------------
 
 // From https://github.com/pagekit/vue-resource/blob/develop/docs/config.md
 var VueResource = require('vue-resource');
@@ -24,12 +20,8 @@ Vue.http.interceptors.push((request, next) => {
   next();
 });
 
-//---------------------------------------------------------------------
-
 // From https://github.com/axios/axios
 axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
-
-//---------------------------------------------------------------------
 
 import Home from './components/Home.vue';
 

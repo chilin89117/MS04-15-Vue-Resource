@@ -28,7 +28,15 @@
     <button class="btn btn-danger" @click="clear">Clear</button>
     <br><br>
     <ul class="list-group">
-      <li class="list-group-item" v-for="user in users">Name: {{user.name}} Email: {{user.email}}</li>
+      <li class="list-group-item" v-for="user in users" :key="user.id">Name: {{user.name}} Email: {{user.email}}</li>
+    </ul>
+    <hr>
+    <h3>Show Users (Using "Resource" in vue-resource)</h3>
+    <button class="btn btn-success" @click="getUsersVR2">Resource</button>
+    <button class="btn btn-danger" @click="clear2">Clear</button>
+    <br><br>
+    <ul class="list-group">
+      <li class="list-group-item" v-for="user in users2" :key="user.id">Name: {{user.name}} Email: {{user.email}}</li>
     </ul>
   </div>
 </template>
@@ -42,25 +50,25 @@
         password: '',
         hashed: '',
         users: [],
+        users2: [],
+        resource: {},
       };
     },
     props: {
       title: String,
       bcrypt: Object,
     },
+    created() {
+      const customActions = {
+        getAlt: {method: 'GET'}
+      };
+      this.resource = this.$resource('/users', {}, customActions);
+    },
     methods: {
       // Add user using jQuery/AJAX -----------------------------------
       submitJQ() {
         var vm = this;
         vm.hashed = vm.bcrypt.hashSync(vm.password, 8);
-
-        // Get CSRF token from <meta> element
-        // $.ajaxSetup({
-        //   headers: {
-        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        //   },
-        // });
-
         $.ajax({
           url: '/users',
           method: 'post',
@@ -73,7 +81,6 @@
         .done((result) => {
           // Log JSON object returned from 'UserController@store'
           console.log(result.msg);
-
           // Reset input fields to blanks
           vm.name = '';
           vm.email = '';
@@ -87,7 +94,6 @@
       submitVR() {
         var vm = this;
         vm.hashed = vm.bcrypt.hashSync(vm.password, 8);
-
         // Using 'vue-resource' (see setting headers for csrf-token in 'app.js')
         vm.$http.post('/users', {
           name: vm.name,
@@ -98,7 +104,6 @@
           (result) => {
             // Log JSON object returned from 'UserController@store'
             console.log(result.body.msg);
-
             // Reset input fields to blanks
             vm.name = '';
             vm.email = '';
@@ -113,7 +118,6 @@
       submitAX() {
         var vm = this;
         vm.hashed = vm.bcrypt.hashSync(vm.password, 8);
-
         axios.post('/users', {
           name: vm.name,
           email: vm.email,
@@ -122,7 +126,6 @@
         .then((response) => {
           // Log JSON object returned from 'UserController@store'
           console.log(response.data.msg);
-
           // Reset input fields to blanks
           vm.name = '';
           vm.email = '';
@@ -135,7 +138,6 @@
       // Get users using jQuery/AJAX ----------------------------------
       getUsersJQ() {
         var vm = this;
-
         $.ajax({
           url: '/users',
           method: 'get',
@@ -151,7 +153,6 @@
       // Get users using vue-resource ---------------------------------
       getUsersVR() {
         var vm = this;
-
         vm.$http.get('/users')
         .then(
           (result) => {
@@ -166,7 +167,6 @@
       // Get users using Axios ----------------------------------------
       getUsersAX() {
         var vm = this;
-
         axios.get('/users')
         .then((result) => {
           console.log(result.data);
@@ -179,9 +179,26 @@
       // Clear list of users ------------------------------------------
       clear() {
         var vm = this;
-
         vm.users = [];
       },
+      // Use resource and custom actions ------------------------------
+      getUsersVR2() {
+        var vm = this;
+        this.resource.getAlt()
+          .then(
+            (result) => {
+              console.log(result.body);
+              vm.users2 = result.body;
+            },
+            (error) => {
+              console.log(error.body.message);
+            },
+          );
+      },
+      clear2() {
+        var vm = this;
+        vm.users2 = [];
+      },      
     },
   };
 </script>

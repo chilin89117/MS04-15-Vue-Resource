@@ -8,6 +8,7 @@
 	* `jQuery/AJAX`
 	* `vue-resource`
 	* `Axios`
+* Use `this.$resource` and custom actions to display users
 
 * Note: globally setup `X-CSRF-TOKEN` in request headers using content of `<meta>` tag, i.e.
 	* `$('meta[name="csrf-token"]').attr('content')` 
